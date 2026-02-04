@@ -187,25 +187,11 @@
             100% { opacity: 1; filter: blur(0); }
         }
         @media (max-width: 768px) {
-    #hero {
-        justify-content: space-around; /* Distributes title, countdown, and scroll msg evenly */
-        padding: 60px 20px;
-    }
-    
-    #scroll-msg {
-        margin-top: 20px !important;
-        font-size: 0.7rem;
-        width: 100%;
-        text-align: center;
-    }
-
-    .glitch-name {
-        font-size: 2.5rem !important; /* Prevents title from being too huge on mobile */
-    }
-    .reveal h2{
-      text-align: center;
-    }
-}
+            #hero { justify-content: space-around; padding: 60px 20px; }
+            #scroll-msg { margin-top: 20px !important; font-size: 0.7rem; width: 100%; text-align: center; }
+            .glitch-name { font-size: 2.2rem !important; }
+            .reveal h2{ text-align: center; }
+        }
     </style>
 </head>
 <body>
@@ -213,12 +199,12 @@
     <canvas id="space-canvas"></canvas>
 
     <section id="hero" style="opacity: 1;">
-        <h1 class="glitch-name" id="main-title" style="font-family: 'Cinzel Decorative'; font-size: clamp(1rem, 10vw, 8rem); color: var(--gold); text-align: center;">A legacy of magic is about to begin. Watch the sky.</h1>
+        <h1 class="glitch-name" id="main-title" style="font-family: 'Cinzel Decorative'; font-size: clamp(1.5rem, 5vw, 4rem); color: var(--gold); text-align: center; padding: 0 20px;">A legacy of magic is about to begin. Watch the sky.</h1>
         <div id="countdown" style="display: flex; gap: 20px; margin-top: 20px;">
             <div style="text-align: center;"><h2 id="d" style="font-size: 2.5rem;">00</h2><p style="font-size: 0.7rem;">DAYS</p></div>
             <div style="text-align: center;"><h2 id="h" style="font-size: 2.5rem;">00</h2><p style="font-size: 0.7rem;">HOURS</p></div>
             <div style="text-align: center;"><h2 id="m" style="font-size: 2.5rem;">00</h2><p style="font-size: 0.7rem;">MINS</p></div>
-            <div style="text-align: center;"><h2 id="s" style="font-size: 2.5rem;">00</h2><p style="font-size: 0.7rem;">SECS</p></div>
+            <div style="text-align: center;"><h2 id="s" style="font-size: 2.5rem;">10</h2><p style="font-size: 0.7rem;">SECS</p></div>
         </div>
         <p id="scroll-msg" style="margin-top: 40px; opacity: 0; letter-spacing: 5px; font-size: 0.8rem;">SCROLL TO START THE JOURNEY</p>
     </section>
@@ -291,26 +277,34 @@
     <audio id="bday-song" loop><source src="birthday.mp3"></audio>
 
     <script>
-        const bday = new Date("February 4, 2026 00:00:00").getTime();
+        // Start 10 seconds from "now"
+        const bday = Date.now() + 10000; 
+
         const timer = setInterval(() => {
             const now = new Date().getTime();
             const diff = bday - now;
+            
             if (diff <= 0) {
                 clearInterval(timer);
+                // Zero out the display
+                document.getElementById('s').innerText = "00";
                 unlock();
             } else {
-                document.getElementById('d').innerText = Math.floor(diff / 86400000);
-                document.getElementById('h').innerText = Math.floor((diff % 86400000) / 3600000);
-                document.getElementById('m').innerText = Math.floor((diff % 3600000) / 60000);
-                document.getElementById('s').innerText = Math.floor((diff % 60000) / 1000);
+                document.getElementById('d').innerText = "00";
+                document.getElementById('h').innerText = "00";
+                document.getElementById('m').innerText = "00";
+                document.getElementById('s').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
             }
         }, 1000);
 
         function unlock() {
             document.body.style.overflow = "auto";
             document.getElementById('main-title').innerText = "HAPPY BIRTHDAY TOOBA!";
+            document.getElementById('main-title').style.fontSize = "clamp(2rem, 10vw, 6rem)";
             document.getElementById('scroll-msg').style.opacity = "1";
-            document.getElementById('bday-song').play().catch(() => {});
+            document.getElementById('bday-song').play().catch(() => {
+                console.log("Autoplay blocked. User needs to interact.");
+            });
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
