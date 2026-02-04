@@ -186,6 +186,26 @@
             0% { opacity: 0; filter: blur(10px); }
             100% { opacity: 1; filter: blur(0); }
         }
+        @media (max-width: 768px) {
+    #hero {
+        justify-content: space-around; /* Distributes title, countdown, and scroll msg evenly */
+        padding: 60px 20px;
+    }
+    
+    #scroll-msg {
+        margin-top: 20px !important;
+        font-size: 0.7rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .glitch-name {
+        font-size: 2.5rem !important; /* Prevents title from being too huge on mobile */
+    }
+    .reveal h2{
+      text-align: center;
+    }
+}
     </style>
 </head>
 <body>
@@ -238,7 +258,7 @@
     </section>
 
     <section class="reveal">
-        <h2 style="font-family: 'Cinzel Decorative'; font-size: 2.5rem; margin-bottom: 50px;">The Archive</h2>
+        <h2 style="font-family: 'Cinzel Decorative'; font-size: 2.5rem; margin-bottom: 50px;">THE ART OF YOU</h2>
         <div class="polaroid-gallery">
             <div class="polaroid" style="--r: -4deg;"><img src="tooba.jpeg"><p style="color: #333; text-align: center; margin-top: 10px; font-family: 'Parisienne';">Breathtaking</p></div>
             <div class="polaroid" style="--r: 3deg;"><img src="t2.jfif"><p style="color: #333; text-align: center; margin-top: 10px; font-family: 'Parisienne';">Pure Joy</p></div>
